@@ -506,4 +506,36 @@
   .stop-card { padding: var(--space-lg); }
   .journey-hud { padding: var(--space-sm) var(--space-md) var(--space-md); gap: var(--space-md); }
   .journey-brand { display: none; }
+
+  /* overlays: tighten padding so text is not crushed, and stack everything */
+  .detail-overlay .intro,
+  .detail-overlay .philosophy,
+  .detail-overlay .experiences,
+  .detail-overlay .closing { padding: var(--space-md) 12px var(--space-xl); }
+  .detail-overlay .section-head,
+  .detail-overlay .intro-block,
+  .detail-overlay .definition-block,
+  .detail-overlay .philosophy-block,
+  .detail-overlay .experience-card,
+  .detail-overlay .experience-card:first-of-type,
+  .detail-overlay .closing-counter,
+  .detail-overlay .closing-index,
+  .detail-overlay .closing-note { padding: var(--space-md); }
+
+  /* iii / iv stop floating and stack full width */
+  .detail-overlay .intro-block-narrow,
+  .detail-overlay .intro-block-narrow ~ .intro-block-narrow {
+    float: none;
+    width: auto;
+    transform: none;
+  }
+
+  /* value notes: one per row, untilted so they do not clip */
+  .detail-overlay .values-grid { gap: var(--space-md); }
+  .detail-overlay .values-grid > * { flex: 1 1 100%; }
+  .detail-overlay .values-grid > *:nth-child(odd) .value-card,
+  .detail-overlay .values-grid > *:nth-child(even) .value-card,
+  .detail-overlay .values-grid > *:nth-child(3n) .value-card { transform: none; }
+
+  .detail-overlay .closing-counter-num { font-size: clamp(4rem, 22vw, 6rem); }
 }
