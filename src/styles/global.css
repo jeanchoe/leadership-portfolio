@@ -1,0 +1,215 @@
+/* =============================================================
+   Jean Choe — Leadership Portfolio
+   Warm editorial style. Paper-cream + deep ink + rust accent.
+   ============================================================= */
+
+:root {
+  /* Palette — warm, paper-like */
+  --paper:        #F5EFE6;   /* main background, cream */
+  --paper-deep:   #ECE3D4;   /* secondary surfaces */
+  --paper-warm:   #E8DCC4;   /* tertiary, slightly more saturated */
+  --ink:          #1F1A14;   /* primary text, near-black brown */
+  --ink-soft:     #3A3128;   /* secondary text */
+  --ink-mute:     #6B5E4E;   /* muted text */
+  --rust:         #5E3A8C;   /* primary accent (deep violet) */
+  --rust-deep:    #472B6E;   /* hover accent */
+  --moss:         #5C6B4A;   /* secondary accent, sparingly */
+  --gold:         #C8924A;   /* tertiary accent */
+  --line:         rgba(31, 26, 20, 0.14);
+  --line-strong:  rgba(31, 26, 20, 0.32);
+
+  /* Typography */
+  --font-display: 'Playfair Display', 'Times New Roman', serif;
+  --font-body:    'Instrument Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --font-hand:    'Caveat', cursive;
+
+  /* Spacing scale */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 9rem;
+
+  /* Layout */
+  --max-w: 1240px;
+  --reading-w: 680px;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Subtle paper grain on body */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    radial-gradient(rgba(31,26,20,0.025) 1px, transparent 1px),
+    radial-gradient(rgba(31,26,20,0.015) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 1px 2px;
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  font-weight: 300;
+}
+h2 {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.05;
+}
+h3 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  line-height: 1.2;
+}
+h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+p { margin: 0 0 1em 0; }
+
+em { font-style: italic; color: var(--ink-soft); }
+
+.serif-display {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 300;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: var(--space-sm);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 var(--space-lg); }
+}
+
+/* Section base */
+section {
+  padding: var(--space-3xl) 0;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  section { padding: var(--space-2xl) 0; }
+}
+
+/* Links */
+a {
+  color: var(--rust);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.2s ease;
+}
+a:hover { color: var(--rust-deep); }
+
+/* Selection */
+::selection {
+  background: var(--rust);
+  color: var(--paper);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes drawIn {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.fade-up { animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.fade-in { animation: fadeIn 1.2s ease both; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Utility */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  margin: var(--space-lg) 0;
+}
+
+.ornament {
+  font-family: var(--font-display);
+  color: var(--rust);
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  text-align: center;
+  margin: var(--space-lg) 0;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,21 @@
+.experiences {
+  background: var(--paper);
+}
+.experiences-cocurricular {
+  background: linear-gradient(180deg, var(--paper-deep) 0%, var(--paper) 100%);
+}
+
+.section-context {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  max-width: 56ch;
+  margin-top: var(--space-md);
+}
+
+.experiences-list {
+  display: flex;
+  flex-direction: column;
+}

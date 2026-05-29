@@ -1,0 +1,45 @@
+.artifact-art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  color: var(--ink-soft);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+}
+.artifact-art:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -20px rgba(31, 26, 20, 0.18);
+}
+
+.art-svg {
+  width: 100%;
+  flex: 1;
+  display: block;
+  color: var(--ink-soft);
+}
+
+.artifact-art-label {
+  margin-top: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: center;
+}
+
+/* Per-type backgrounds */
+.artifact-diagram { background: var(--paper); }
+.artifact-principles { background: var(--paper-deep); }
+.artifact-book { background: var(--paper-warm); }
+.artifact-screenshot { background: var(--paper); }
+.artifact-abstract { background: var(--paper); }
+.artifact-video { background: var(--paper-deep); }
+.artifact-document { background: var(--paper-deep); }
+.artifact-website { background: var(--paper); }
+.artifact-photo { background: var(--paper-warm); }
