@@ -1,0 +1,174 @@
+.journey {
+  position: relative;
+  width: 100%;
+}
+
+/* pinned viewport while the long wrapper scrolls */
+.journey-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 50% -10%, var(--paper) 0%, var(--paper-deep) 70%, var(--paper-warm) 100%);
+}
+
+/* parallax depth layers */
+.journey-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+}
+.journey-bg-far {
+  width: 360vw;
+  background-image: radial-gradient(rgba(94, 58, 140, 0.10) 3px, transparent 4px);
+  background-size: 96px 96px;
+  opacity: 0.7;
+}
+.journey-bg-mid {
+  width: 260vw;
+  background-image: radial-gradient(rgba(31, 26, 20, 0.10) 2px, transparent 3px);
+  background-size: 50px 50px;
+  opacity: 0.8;
+}
+
+/* the horizontal track that slides as you scroll */
+.journey-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  will-change: transform;
+}
+
+/* the path you travel along */
+.journey-path {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70%;
+  height: 0;
+  border-top: 2px dashed var(--line-strong);
+  z-index: 0;
+}
+
+.stop {
+  position: relative;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stop-card {
+  position: relative;
+  z-index: 2;
+  width: min(540px, 78vw);
+  margin-bottom: 11vh; /* lift the card above the path line */
+  padding: var(--space-xl);
+  background: #fffdf8;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 1px rgba(31, 26, 20, 0.08),
+    0 26px 50px -22px rgba(31, 26, 20, 0.40);
+  text-align: left;
+}
+.stop-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--rust);
+}
+.stop-kind {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: var(--space-sm) 0 var(--space-md);
+}
+.stop-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: var(--space-md);
+}
+.stop-teaser {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* node where the card meets the path */
+.stop-node {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--rust);
+  box-shadow: 0 0 0 6px rgba(94, 58, 140, 0.08);
+  z-index: 1;
+}
+
+/* heads-up display: brand + progress + hint */
+.journey-hud {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-md) var(--space-xl) var(--space-lg);
+  z-index: 5;
+}
+.journey-brand {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.journey-progress {
+  flex: 1;
+  height: 2px;
+  background: var(--line-strong);
+  position: relative;
+  overflow: hidden;
+}
+.journey-progress span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--rust);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.journey-hint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+  .stop-card { padding: var(--space-lg); }
+  .journey-hud { padding: var(--space-sm) var(--space-md) var(--space-md); gap: var(--space-md); }
+  .journey-brand { display: none; }
+}
