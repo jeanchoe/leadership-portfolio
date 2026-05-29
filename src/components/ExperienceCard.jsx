@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import ArtifactArt from './ArtifactArt'
 import './ExperienceCard.css'
 
 export default function ExperienceCard({ experience, index, kind }) {
@@ -85,7 +84,12 @@ export default function ExperienceCard({ experience, index, kind }) {
           >
             <span className="polaroid-tape" aria-hidden="true" />
             <div className="polaroid-window">
-              <ArtifactArt type={experience.artifact.type} label={experience.artifact.label} />
+              <img
+                className="polaroid-img"
+                src={`${import.meta.env.BASE_URL}artifacts/${experience.id}.jpg`}
+                alt={experience.artifact.label}
+                loading="lazy"
+              />
             </div>
             <figcaption className="polaroid-caption">{experience.artifact.caption}</figcaption>
           </figure>

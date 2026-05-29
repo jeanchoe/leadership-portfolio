@@ -215,6 +215,12 @@
   overflow: hidden;
   background: var(--paper-deep);
 }
+.polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .polaroid-window .artifact-art {
   width: 100%;
   height: 100%;
