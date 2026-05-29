@@ -139,17 +139,34 @@ export default function Journey() {
     }
   }, [reduce])
 
-  // lock background scroll + allow Esc to close the detail overlay
+  // lock background scroll, Esc to close, and parallax the board dots vertically
   useEffect(() => {
     if (!open) return
     document.body.style.overflow = 'hidden'
     const onKey = (e) => { if (e.key === 'Escape') setOpen(null) }
     window.addEventListener('keydown', onKey)
+
+    const scroller = document.querySelector('.detail-scroll')
+    const overlay = document.querySelector('.detail-overlay')
+    let raf = 0
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        if (overlay && scroller) {
+          overlay.style.backgroundPositionY = `${-scroller.scrollTop * 0.3}px`
+        }
+      })
+    }
+    if (!reduce && scroller) scroller.addEventListener('scroll', onScroll, { passive: true })
+
     return () => {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', onKey)
+      if (scroller) scroller.removeEventListener('scroll', onScroll)
+      if (raf) cancelAnimationFrame(raf)
     }
-  }, [open])
+  }, [open, reduce])
 
   const OpenSection = open ? SECTIONS[open] : null
   const chapterColor = open ? bgAt(parseInt(open, 10) / (STOPS.length - 1)) : undefined
