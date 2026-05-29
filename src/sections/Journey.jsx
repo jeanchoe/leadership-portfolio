@@ -94,7 +94,6 @@ export default function Journey() {
   const stageRef = useRef(null)
   const trackRef = useRef(null)
   const farRef = useRef(null)
-  const midRef = useRef(null)
   const fillRef = useRef(null)
   const [open, setOpen] = useState(null)
   const reduce = typeof window !== 'undefined' &&
@@ -117,9 +116,8 @@ export default function Journey() {
 
       track.style.transform = `translate3d(${-(p * dist)}px,0,0)`
       if (stageRef.current) stageRef.current.style.backgroundColor = bgAt(p)
-      if (!reduce) {
-        if (farRef.current) farRef.current.style.transform = `translate3d(${-(p * dist * 0.25)}px,0,0)`
-        if (midRef.current) midRef.current.style.transform = `translate3d(${-(p * dist * 0.55)}px,0,0)`
+      if (!reduce && farRef.current) {
+        farRef.current.style.transform = `translate3d(${-(p * dist * 0.3)}px,0,0)`
       }
       if (fillRef.current) fillRef.current.style.transform = `scaleX(${p})`
 
@@ -159,7 +157,6 @@ export default function Journey() {
     <div className="journey" ref={wrapRef} style={{ height: `${STOPS.length * 100}vh` }}>
       <div className="journey-stage" ref={stageRef}>
         <div className="journey-bg journey-bg-far" ref={farRef} aria-hidden="true" />
-        <div className="journey-bg journey-bg-mid" ref={midRef} aria-hidden="true" />
 
         <div className="journey-track" ref={trackRef}>
           <div className="journey-path" aria-hidden="true" />

@@ -36,13 +36,8 @@
 }
 .journey-bg-far {
   width: 360vw;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.30) 4px, transparent 5px);
-  background-size: 120px 120px;
-}
-.journey-bg-mid {
-  width: 260vw;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 3px, transparent 4px);
-  background-size: 66px 66px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.28) 4px, transparent 5px);
+  background-size: 132px 132px;
 }
 
 /* the horizontal track that slides as you scroll */
