@@ -290,38 +290,61 @@
   flex-direction: column;
   animation: detailIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-/* let the colored board show; drop the content onto a grainy paper sheet */
+/* let the colored board show; break content into separate paper scraps */
+.detail-overlay .detail-scroll { overflow-x: hidden; }
 .detail-overlay .detail-scroll > section { background: transparent; }
 .detail-overlay .intro,
 .detail-overlay .philosophy,
 .detail-overlay .experiences {
   padding: var(--space-xl) var(--space-lg) var(--space-2xl);
 }
-.detail-overlay .intro .container,
-.detail-overlay .philosophy .container,
-.detail-overlay .experiences .container {
+.detail-overlay .container { max-width: 940px; }
+.detail-overlay .ornament { display: none; }
+.detail-overlay .philosophy-block::before { content: none; }   /* drop the margin rule here */
+.detail-overlay .experiences-list { gap: 0; }
+
+/* each block becomes its own grainy paper scrap */
+.detail-overlay .section-head,
+.detail-overlay .intro-block,
+.detail-overlay .definition-block,
+.detail-overlay .philosophy-block,
+.detail-overlay .experience-card {
   position: relative;
   background-color: var(--paper);
   background-image: var(--paper-noise);
-  background-size: 220px;
+  background-size: 200px;
   background-blend-mode: multiply;
+  border: none;
   border-radius: 5px;
-  padding: var(--space-2xl) var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
+  margin: 0 0 var(--space-lg);
   box-shadow:
-    0 1px 1px rgba(31, 26, 20, 0.10),
-    0 40px 70px -36px rgba(31, 26, 20, 0.55);
+    0 2px 3px rgba(31, 26, 20, 0.08),
+    0 22px 40px -26px rgba(31, 26, 20, 0.5);
 }
-/* a strip of tape pinning the page to the board */
-.detail-overlay .intro .container::before,
-.detail-overlay .philosophy .container::before,
-.detail-overlay .experiences .container::before {
+.detail-overlay .section-head { padding-bottom: var(--space-lg); }
+.detail-overlay .definition-block { max-width: none; }
+.detail-overlay .philosophy-block { display: block; max-width: none; }
+.detail-overlay .experience-card,
+.detail-overlay .experience-card:first-of-type { padding: var(--space-xl); }
+
+/* flatten nested value cards so we don't get card-in-card */
+.detail-overlay .value-card {
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
+.detail-overlay .value-card:hover { transform: none; box-shadow: none; }
+
+/* a piece of tape on the title scrap */
+.detail-overlay .section-head::before {
   content: '';
   position: absolute;
-  top: -15px;
-  left: 50%;
-  width: 150px;
-  height: 30px;
-  transform: translateX(-50%) rotate(-1.5deg);
+  top: -14px;
+  left: 40px;
+  width: 132px;
+  height: 28px;
+  transform: rotate(-2.5deg);
   background: linear-gradient(110deg,
     rgba(214, 196, 150, 0.6), rgba(232, 216, 178, 0.45) 50%, rgba(214, 196, 150, 0.6));
   box-shadow: 0 1px 2px rgba(31, 26, 20, 0.12);
