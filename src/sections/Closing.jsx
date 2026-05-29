@@ -51,8 +51,8 @@ export default function Closing() {
         <Reveal delay={200}>
           <div className="closing-note">
             <p className="closing-note-body">
-              This portfolio is a snapshot, not a conclusion. The version of me that wrote it
-              has already disagreed with parts of it. That feels right.
+              This portfolio is a snapshot, not a conclusion. I'm still on my journey,
+              and I'm learning more every day!
             </p>
             <div className="closing-sig">
               <span className="sig-name">Jean Choe</span>
