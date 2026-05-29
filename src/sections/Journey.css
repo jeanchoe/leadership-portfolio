@@ -229,43 +229,60 @@
   color: var(--ink);
 }
 
-/* ground line the walker travels along */
-.journey-ground {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 70px;
-  height: 0;
-  border-top: 1px dashed var(--line);
-  z-index: 4;
+/* explore button -> opens full readable content */
+.stop-explore {
+  margin-top: var(--space-md);
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rust);
+  background: none;
+  border: 1px solid var(--rust);
+  border-radius: 999px;
+  padding: 0.6em 1.2em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
+.stop-explore:hover { background: var(--rust); color: var(--paper); }
 
-/* the little walker */
-.journey-walker {
-  position: absolute;
-  bottom: 70px;
-  left: 3%;
-  transform: translateX(-50%);
-  z-index: 6;
-  will-change: left;
+/* full readable detail overlay */
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  animation: detailIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.walker-fig {
-  width: 26px;
-  height: 40px;
-  display: block;
-  fill: var(--rust);
+@keyframes detailIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
 }
-.journey-walker.facing-left .walker-fig { transform: scaleX(-1); }
-.w-all, .leg, .w-arm { transform-box: fill-box; }
-.w-all { transform-origin: 50% 100%; }
-.leg, .w-arm { transform-origin: 50% 0; }
-.journey-walker.is-walking .w-all { animation: bob 0.46s ease-in-out infinite; }
-.journey-walker.is-walking .leg-a { animation: stepA 0.46s ease-in-out infinite; }
-.journey-walker.is-walking .leg-b { animation: stepB 0.46s ease-in-out infinite; }
-.journey-walker.is-walking .w-arm { animation: stepB 0.46s ease-in-out infinite; }
-@keyframes stepA { 0%, 100% { transform: rotate(22deg); } 50% { transform: rotate(-22deg); } }
-@keyframes stepB { 0%, 100% { transform: rotate(-22deg); } 50% { transform: rotate(22deg); } }
-@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+.detail-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.detail-close {
+  position: fixed;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 51;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 999px;
+  padding: 0.7em 1.3em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -8px rgba(31, 26, 20, 0.5);
+}
 
 @media (max-width: 860px) {
   .stop-extras { display: none; }

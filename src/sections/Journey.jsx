@@ -1,14 +1,27 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { coreValues } from '../data/intro'
 import { leadershipDefinition } from '../data/philosophy'
 import { curricularExperiences } from '../data/curricular'
 import { coCurricularExperiences } from '../data/cocurricular'
+import Introduction from './Introduction'
+import Philosophy from './Philosophy'
+import Curricular from './Curricular'
+import CoCurricular from './CoCurricular'
+import Closing from './Closing'
 import './Journey.css'
 
 const cut = (s, n) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s)
 
 const course = curricularExperiences[0]
 const coCourse = coCurricularExperiences[0]
+
+const SECTIONS = {
+  '01': Introduction,
+  '02': Philosophy,
+  '03': Curricular,
+  '04': CoCurricular,
+  '05': Closing,
+}
 
 const STOPS = [
   {
@@ -69,19 +82,16 @@ export default function Journey() {
   const farRef = useRef(null)
   const midRef = useRef(null)
   const fillRef = useRef(null)
-  const walkerRef = useRef(null)
+  const [open, setOpen] = useState(null)
   const reduce = typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   useEffect(() => {
     const wrap = wrapRef.current
     const track = trackRef.current
-    const walker = walkerRef.current
     const stops = Array.from(track.querySelectorAll('.stop'))
     let raf = 0
     let lastActive = -1
-    let lastY = window.scrollY
-    let stopTimer = 0
 
     const apply = () => {
       raf = 0
@@ -97,7 +107,6 @@ export default function Journey() {
         if (midRef.current) midRef.current.style.transform = `translate3d(${-(p * dist * 0.55)}px,0,0)`
       }
       if (fillRef.current) fillRef.current.style.transform = `scaleX(${p})`
-      if (walker) walker.style.left = `${3 + p * 94}%`
 
       const idx = Math.round(p * (stops.length - 1))
       if (idx !== lastActive) {
@@ -105,18 +114,7 @@ export default function Journey() {
         lastActive = idx
       }
     }
-
-    const onScroll = () => {
-      const y = window.scrollY
-      if (walker) {
-        walker.classList.add('is-walking')
-        walker.classList.toggle('facing-left', y < lastY)
-        clearTimeout(stopTimer)
-        stopTimer = setTimeout(() => walker.classList.remove('is-walking'), 220)
-      }
-      lastY = y
-      if (!raf) raf = requestAnimationFrame(apply)
-    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply) }
 
     apply()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -124,10 +122,23 @@ export default function Journey() {
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
-      clearTimeout(stopTimer)
       if (raf) cancelAnimationFrame(raf)
     }
   }, [reduce])
+
+  // lock background scroll + allow Esc to close the detail overlay
+  useEffect(() => {
+    if (!open) return
+    document.body.style.overflow = 'hidden'
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(null) }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  const OpenSection = open ? SECTIONS[open] : null
 
   return (
     <div className="journey" ref={wrapRef} style={{ height: `${STOPS.length * 100}vh` }}>
@@ -145,6 +156,11 @@ export default function Journey() {
                   <div className="stop-kind">{s.kind}</div>
                   <h2 className="stop-title">{s.title}</h2>
                   <p className="stop-teaser">{s.teaser}</p>
+                  {SECTIONS[s.num] && (
+                    <button className="stop-explore" onClick={() => setOpen(s.num)}>
+                      Explore this chapter &rarr;
+                    </button>
+                  )}
                 </article>
 
                 {s.extras.length > 0 && (
@@ -167,25 +183,21 @@ export default function Journey() {
           ))}
         </div>
 
-        <div className="journey-ground" aria-hidden="true" />
-        <div className="journey-walker" ref={walkerRef} aria-hidden="true">
-          <svg className="walker-fig" viewBox="0 0 26 40">
-            <g className="w-all">
-              <g className="leg leg-a"><rect x="11" y="25" width="3.4" height="13" rx="1.7" /></g>
-              <g className="leg leg-b"><rect x="11" y="25" width="3.4" height="13" rx="1.7" /></g>
-              <rect className="w-body" x="11" y="12" width="4" height="15" rx="2" />
-              <g className="w-arm"><rect x="11.2" y="13" width="3" height="11" rx="1.5" /></g>
-              <circle className="w-head" cx="13" cy="7" r="5.5" />
-            </g>
-          </svg>
-        </div>
-
         <div className="journey-hud">
           <span className="journey-brand">Jean Choe</span>
           <div className="journey-progress"><span ref={fillRef} /></div>
           <span className="journey-hint">scroll to travel &rarr;</span>
         </div>
       </div>
+
+      {OpenSection && (
+        <div className="detail-overlay" role="dialog" aria-modal="true">
+          <button className="detail-close" onClick={() => setOpen(null)}>Close &times;</button>
+          <div className="detail-scroll">
+            <OpenSection />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
