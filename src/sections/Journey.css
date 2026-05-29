@@ -48,6 +48,7 @@
   height: 100%;
   display: flex;
   will-change: transform;
+  z-index: 2; /* keep all cards/notes above the dot layer */
 }
 
 /* the path you travel along */
