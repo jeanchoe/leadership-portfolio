@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// IMPORTANT: change `base` to '/your-repo-name/' when deploying to GitHub Pages
-// e.g. if your repo is github.com/jeanchoe/leadership-portfolio, use '/leadership-portfolio/'
-export default defineConfig({
+// base must match the repo name for GitHub Pages project sites, but stay
+// at '/' for the local dev server.
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: './',
-})
+  base: command === 'build' ? '/leadership-portfolio/' : '/',
+}))
