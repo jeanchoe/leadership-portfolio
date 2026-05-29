@@ -282,10 +282,11 @@
   position: fixed;
   inset: 0;
   z-index: 50;
+  /* flat colored board + confetti dots (grain lives on the scraps only);
+     dots sit behind the scrolling content, showing through the gaps */
   background-color: var(--chapter, var(--paper));
-  background-image: var(--paper-noise);
-  background-size: 240px;
-  background-blend-mode: multiply;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.28) 4px, transparent 5px);
+  background-size: 132px 132px;
   display: flex;
   flex-direction: column;
   animation: detailIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
