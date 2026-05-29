@@ -76,8 +76,22 @@ const STOPS = [
   },
 ]
 
+// playful background palette the journey transitions through, blue -> gold
+const PALETTE = ['#8FB0C9', '#79A8B0', '#8CA87C', '#B49AC8', '#D2937F', '#DAB36B']
+const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]
+const mix = (a, b, t) => {
+  const A = hex(a), B = hex(b)
+  return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`
+}
+const bgAt = (p) => {
+  const seg = p * (PALETTE.length - 1)
+  const i = Math.min(PALETTE.length - 2, Math.floor(seg))
+  return mix(PALETTE[i], PALETTE[i + 1], seg - i)
+}
+
 export default function Journey() {
   const wrapRef = useRef(null)
+  const stageRef = useRef(null)
   const trackRef = useRef(null)
   const farRef = useRef(null)
   const midRef = useRef(null)
@@ -102,6 +116,7 @@ export default function Journey() {
       const dist = track.scrollWidth - window.innerWidth
 
       track.style.transform = `translate3d(${-(p * dist)}px,0,0)`
+      if (stageRef.current) stageRef.current.style.backgroundColor = bgAt(p)
       if (!reduce) {
         if (farRef.current) farRef.current.style.transform = `translate3d(${-(p * dist * 0.25)}px,0,0)`
         if (midRef.current) midRef.current.style.transform = `translate3d(${-(p * dist * 0.55)}px,0,0)`
@@ -142,7 +157,7 @@ export default function Journey() {
 
   return (
     <div className="journey" ref={wrapRef} style={{ height: `${STOPS.length * 100}vh` }}>
-      <div className="journey-stage">
+      <div className="journey-stage" ref={stageRef}>
         <div className="journey-bg journey-bg-far" ref={farRef} aria-hidden="true" />
         <div className="journey-bg journey-bg-mid" ref={midRef} aria-hidden="true" />
 

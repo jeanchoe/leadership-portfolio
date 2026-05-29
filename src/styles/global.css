@@ -8,6 +8,10 @@
   --paper:        #F5EFE6;   /* main background, cream */
   --paper-deep:   #ECE3D4;   /* secondary surfaces */
   --paper-warm:   #E8DCC4;   /* tertiary, slightly more saturated */
+  --sand:         #E7D8BC;   /* paper scrap / card surface */
+
+  /* Reusable fibrous paper grain (SVG turbulence) */
+  --paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23p)'/%3E%3C/svg%3E");
   --ink:          #1F1A14;   /* primary text, near-black brown */
   --ink-soft:     #3A3128;   /* secondary text */
   --ink-mute:     #6B5E4E;   /* muted text */

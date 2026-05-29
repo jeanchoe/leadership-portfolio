@@ -9,11 +9,22 @@
   top: 0;
   height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(120% 80% at 50% -10%, var(--paper) 0%, var(--paper-deep) 70%, var(--paper-warm) 100%);
+  background-color: #8FB0C9; /* JS transitions this color as you travel */
+}
+/* paper grain over the whole colored stage */
+.journey-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper-noise);
+  background-size: 220px;
+  mix-blend-mode: multiply;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* parallax depth layers */
+/* parallax confetti layers */
 .journey-bg {
   position: absolute;
   top: 0;
@@ -21,18 +32,17 @@
   height: 100%;
   pointer-events: none;
   will-change: transform;
+  z-index: 1;
 }
 .journey-bg-far {
   width: 360vw;
-  background-image: radial-gradient(rgba(94, 58, 140, 0.10) 3px, transparent 4px);
-  background-size: 96px 96px;
-  opacity: 0.7;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.30) 4px, transparent 5px);
+  background-size: 120px 120px;
 }
 .journey-bg-mid {
   width: 260vw;
-  background-image: radial-gradient(rgba(31, 26, 20, 0.10) 2px, transparent 3px);
-  background-size: 50px 50px;
-  opacity: 0.8;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 3px, transparent 4px);
+  background-size: 66px 66px;
 }
 
 /* the horizontal track that slides as you scroll */
@@ -52,7 +62,7 @@
   right: 0;
   top: 70%;
   height: 0;
-  border-top: 2px dashed var(--line-strong);
+  border-top: 2px dashed rgba(31, 26, 20, 0.30);
   z-index: 0;
 }
 
@@ -80,13 +90,33 @@
   flex: 0 0 auto;
   width: min(440px, 80vw);
   padding: var(--space-xl);
-  background: #fffdf8;
-  border-radius: 4px;
+  background-color: var(--sand);
+  background-image: var(--paper-noise);
+  background-size: 150px;
+  background-blend-mode: multiply;
+  border-radius: 3px;
   box-shadow:
-    0 1px 1px rgba(31, 26, 20, 0.08),
-    0 26px 50px -22px rgba(31, 26, 20, 0.40);
+    0 2px 2px rgba(31, 26, 20, 0.10),
+    0 26px 48px -22px rgba(31, 26, 20, 0.45);
   text-align: left;
 }
+/* a strip of tape pinning the card */
+.stop-card::before {
+  content: '';
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 112px;
+  height: 28px;
+  transform: translateX(-50%) rotate(-2.5deg);
+  background: linear-gradient(110deg,
+    rgba(214, 196, 150, 0.55), rgba(232, 216, 178, 0.4) 50%, rgba(214, 196, 150, 0.55));
+  box-shadow: 0 1px 2px rgba(31, 26, 20, 0.10);
+  z-index: 3;
+}
+/* alternating scrapbook tilt */
+.stop:nth-of-type(odd) .stop-card { transform: rotate(-1.6deg); }
+.stop:nth-of-type(even) .stop-card { transform: rotate(1.4deg); }
 .stop-num {
   font-family: var(--font-display);
   font-weight: 700;
@@ -127,9 +157,9 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--paper);
-  border: 2px solid var(--rust);
-  box-shadow: 0 0 0 6px rgba(94, 58, 140, 0.08);
+  background: var(--sand);
+  border: 2px solid var(--ink-soft);
+  box-shadow: 0 2px 4px rgba(31, 26, 20, 0.22);
   z-index: 1;
 }
 
@@ -187,17 +217,23 @@
   align-content: center;
 }
 .extra {
-  background: #fffdf8;
+  --r: -1.4deg;
+  background-color: var(--sand);
+  background-image: var(--paper-noise);
+  background-size: 130px;
+  background-blend-mode: multiply;
   border-radius: 3px;
   padding: var(--space-sm) var(--space-md);
-  box-shadow: 0 1px 1px rgba(31, 26, 20, 0.06), 0 14px 26px -16px rgba(31, 26, 20, 0.30);
+  box-shadow: 0 2px 2px rgba(31, 26, 20, 0.08), 0 14px 24px -16px rgba(31, 26, 20, 0.35);
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(16px) rotate(var(--r));
   transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.extra:nth-child(2n) { --r: 1.5deg; }
+.extra:nth-child(3n) { --r: -0.7deg; }
 .stop.is-active .extra {
   opacity: 1;
-  transform: none;
+  transform: rotate(var(--r));
   transition-delay: var(--d, 0.1s);
 }
 .extra-tag {
@@ -217,11 +253,9 @@
 }
 /* artifact-flavored note: handwriting + slight tilt */
 .extra-artifact {
+  --r: -1.8deg;
   grid-column: 1 / -1;
-  background: #fffef9;
-  transform: translateY(16px) rotate(-1.6deg);
 }
-.stop.is-active .extra-artifact { transform: rotate(-1.6deg); }
 .extra-artifact .extra-body {
   font-family: var(--font-hand);
   font-size: 1.1rem;
