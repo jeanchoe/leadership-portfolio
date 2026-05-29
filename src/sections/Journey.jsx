@@ -152,6 +152,7 @@ export default function Journey() {
   }, [open])
 
   const OpenSection = open ? SECTIONS[open] : null
+  const chapterColor = open ? bgAt(parseInt(open, 10) / (STOPS.length - 1)) : undefined
 
   return (
     <div className="journey" ref={wrapRef} style={{ height: `${STOPS.length * 100}vh` }}>
@@ -203,7 +204,7 @@ export default function Journey() {
       </div>
 
       {OpenSection && (
-        <div className="detail-overlay" role="dialog" aria-modal="true">
+        <div className="detail-overlay" role="dialog" aria-modal="true" style={{ '--chapter': chapterColor }}>
           <button className="detail-close" onClick={() => setOpen(null)}>Close &times;</button>
           <div className="detail-scroll">
             <OpenSection />

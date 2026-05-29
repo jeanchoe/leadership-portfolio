@@ -277,15 +277,54 @@
 }
 .stop-explore:hover { background: var(--rust); color: var(--paper); }
 
-/* full readable detail overlay */
+/* full readable detail overlay — a scrapbook page on the chapter's colored board */
 .detail-overlay {
   position: fixed;
   inset: 0;
   z-index: 50;
-  background: var(--paper);
+  background-color: var(--chapter, var(--paper));
+  background-image: var(--paper-noise);
+  background-size: 240px;
+  background-blend-mode: multiply;
   display: flex;
   flex-direction: column;
   animation: detailIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* let the colored board show; drop the content onto a grainy paper sheet */
+.detail-overlay .detail-scroll > section { background: transparent; }
+.detail-overlay .intro,
+.detail-overlay .philosophy,
+.detail-overlay .experiences {
+  padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+}
+.detail-overlay .intro .container,
+.detail-overlay .philosophy .container,
+.detail-overlay .experiences .container {
+  position: relative;
+  background-color: var(--paper);
+  background-image: var(--paper-noise);
+  background-size: 220px;
+  background-blend-mode: multiply;
+  border-radius: 5px;
+  padding: var(--space-2xl) var(--space-xl);
+  box-shadow:
+    0 1px 1px rgba(31, 26, 20, 0.10),
+    0 40px 70px -36px rgba(31, 26, 20, 0.55);
+}
+/* a strip of tape pinning the page to the board */
+.detail-overlay .intro .container::before,
+.detail-overlay .philosophy .container::before,
+.detail-overlay .experiences .container::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 150px;
+  height: 30px;
+  transform: translateX(-50%) rotate(-1.5deg);
+  background: linear-gradient(110deg,
+    rgba(214, 196, 150, 0.6), rgba(232, 216, 178, 0.45) 50%, rgba(214, 196, 150, 0.6));
+  box-shadow: 0 1px 2px rgba(31, 26, 20, 0.12);
 }
 @keyframes detailIn {
   from { opacity: 0; transform: translateY(16px); }
